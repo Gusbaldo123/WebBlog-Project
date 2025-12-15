@@ -1,0 +1,528 @@
+{
+	"info": {
+		"_postman_id": "e7758c00-f9f5-40e9-8435-467ed264b777",
+		"name": "Blog",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "39389039"
+	},
+	"item": [
+		{
+			"name": "Author",
+			"item": [
+				{
+					"name": "Get Author by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/author/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Author by id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNiIsImlzcyI6ImxpbmstYXdzLWJhY2tlbmQiLCJhdWQiOiJsaW5rLWF3cy1mcm9udGVuZCIsImV4cCI6MTc2NTIyOTU1OCwiaWF0IjoxNzY1MjI1OTU4LCJ1c2VyIjp7ImlkIjoyNiwibmFtZSI6Ikd1c2JhbGRvQURNIiwiZW1haWwiOiJhZG1pbkBndXNiYWxkby5jb20iLCJyb2xlIjoiQURNSU5JU1RSQVRPUiJ9fQ.0J6_WWOZzuDcnHz8PAUt2dgeAFXQStDyR0bK_T2yXxQ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{$randomFirstName}}\",\n    \"email\": \"{{$randomEmail}}\",\n    \"password\": \"{{$randomPassword}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/author/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Author by Id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNyIsImlzcyI6ImxpbmstYXdzLWJhY2tlbmQiLCJhdWQiOiJsaW5rLWF3cy1mcm9udGVuZCIsImV4cCI6MTc2NTIyNzcwMywiaWF0IjoxNzY1MjI0MTAzLCJ1c2VyIjp7ImlkIjoyNywibmFtZSI6IkFiYnkiLCJlbWFpbCI6IkN5ZG5leTgyQGdtYWlsLmNvbSIsInJvbGUiOiJTSU1QTEUifX0.h9SiCC94sWWbWaK1UO2hOS4TtDX6J1dVJY5ggqrvYz8",
+								"description": "Jwt Token",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{base_url}}/author/2"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Posts by Author Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "size",
+								"value": "2",
+								"type": "text"
+							},
+							{
+								"key": "page",
+								"value": "0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/author/7/posts/?size=5&page=0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"author",
+								"7",
+								"posts",
+								""
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "5"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Author",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Admin\",\n    \"email\":\"admin@gusbaldo.com\",\n    \"password\":\"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/author/register"
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"admin@gusbaldo.com\",\n    \"password\":\"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/author/login"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Create Category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaXNzIjoibGluay1hd3MtYmFja2VuZCIsImF1ZCI6ImxpbmstYXdzLWZyb250ZW5kIiwiZXhwIjoxNzY1MzYwMTM3LCJpYXQiOjE3NjUyNzM3MzcsInVzZXIiOnsiaWQiOjEsIm5hbWUiOiJHdXNiYWxkb0FETSIsImVtYWlsIjoiYWRtaW5AZ3VzYmFsZG8uY29tIiwicm9sZSI6IkFETUlOSVNUUkFUT1IifX0.uZ_BivC_dCzST1CGlLqAijf1OolEoNvHABwkV2yZOYE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Tech\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/category"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category by Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaXNzIjoibGluay1hd3MtYmFja2VuZCIsImF1ZCI6ImxpbmstYXdzLWZyb250ZW5kIiwiZXhwIjoxNzY1MzIyNzc0LCJpYXQiOjE3NjUyMzYzNzQsInVzZXIiOnsiaWQiOjEsIm5hbWUiOiJHdXNiYWxkb0FETSIsImVtYWlsIjoiYWRtaW5AZ3VzYmFsZG8uY29tIiwicm9sZSI6IkFETUlOSVNUUkFUT1IifX0.JSMa9jVkiil4Z66LI8l9DOENUeIJB2EA63Pcb4djDxE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/category/1"
+					},
+					"response": []
+				},
+				{
+					"name": "List All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/category/"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category by Id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaXNzIjoibGluay1hd3MtYmFja2VuZCIsImF1ZCI6ImxpbmstYXdzLWZyb250ZW5kIiwiZXhwIjoxNzY1MzIyNzc0LCJpYXQiOjE3NjUyMzYzNzQsInVzZXIiOnsiaWQiOjEsIm5hbWUiOiJHdXNiYWxkb0FETSIsImVtYWlsIjoiYWRtaW5AZ3VzYmFsZG8uY29tIiwicm9sZSI6IkFETUlOSVNUUkFUT1IifX0.JSMa9jVkiil4Z66LI8l9DOENUeIJB2EA63Pcb4djDxE",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"{{$randomAdjective}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/category/4"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category by Id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaXNzIjoibGluay1hd3MtYmFja2VuZCIsImF1ZCI6ImxpbmstYXdzLWZyb250ZW5kIiwiZXhwIjoxNzY1MzIyNzc0LCJpYXQiOjE3NjUyMzYzNzQsInVzZXIiOnsiaWQiOjEsIm5hbWUiOiJHdXNiYWxkb0FETSIsImVtYWlsIjoiYWRtaW5AZ3VzYmFsZG8uY29tIiwicm9sZSI6IkFETUlOSVNUUkFUT1IifX0.JSMa9jVkiil4Z66LI8l9DOENUeIJB2EA63Pcb4djDxE",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{base_url}}/category/4"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "Create Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwiaXNzIjoibGluay1hd3MtYmFja2VuZCIsImF1ZCI6ImxpbmstYXdzLWZyb250ZW5kIiwiZXhwIjoxNzY1MzgxMjY0LCJpYXQiOjE3NjUyOTQ4NjQsInVzZXIiOnsiaWQiOjMsIm5hbWUiOiJDYWJlbGl0b3MiLCJlbWFpbCI6ImNhYmVsaXRvc0BndXNiYWxkby5jb20iLCJyb2xlIjoiU0lNUExFIn19.tC5ZFWP8NolyP8IUoT3hrmiRAQUKz6aylUOzNEbrFjs",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"{{$randomJobTitle}}\",\n    \"content\":\"{{$randomJobTitle}}\",\n    \"categoryIds\":[1]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/post"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Post with agent",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaXNzIjoibGluay1hd3MtYmFja2VuZCIsImF1ZCI6ImxpbmstYXdzLWZyb250ZW5kIiwiZXhwIjoxNzY1MzYwMTM3LCJpYXQiOjE3NjUyNzM3MzcsInVzZXIiOnsiaWQiOjEsIm5hbWUiOiJHdXNiYWxkb0FETSIsImVtYWlsIjoiYWRtaW5AZ3VzYmFsZG8uY29tIiwicm9sZSI6IkFETUlOSVNUUkFUT1IifX0.uZ_BivC_dCzST1CGlLqAijf1OolEoNvHABwkV2yZOYE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Politics\"\n}"
+						},
+						"url": "{{base_url}}/post/generate"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Post by Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaXNzIjoibGluay1hd3MtYmFja2VuZCIsImF1ZCI6ImxpbmstYXdzLWZyb250ZW5kIiwiZXhwIjoxNzY1MzYwMTM3LCJpYXQiOjE3NjUyNzM3MzcsInVzZXIiOnsiaWQiOjEsIm5hbWUiOiJHdXNiYWxkb0FETSIsImVtYWlsIjoiYWRtaW5AZ3VzYmFsZG8uY29tIiwicm9sZSI6IkFETUlOSVNUUkFUT1IifX0.uZ_BivC_dCzST1CGlLqAijf1OolEoNvHABwkV2yZOYE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{base_url}}/post/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Post by Id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaXNzIjoibGluay1hd3MtYmFja2VuZCIsImF1ZCI6ImxpbmstYXdzLWZyb250ZW5kIiwiZXhwIjoxNzY1MzgwNjA1LCJpYXQiOjE3NjUyOTQyMDUsInVzZXIiOnsiaWQiOjEsIm5hbWUiOiJHdXNiYWxkb0FETSIsImVtYWlsIjoiYWRtaW5AZ3VzYmFsZG8uY29tIiwicm9sZSI6IkFETUlOSVNUUkFUT1IifX0.7RFtTgz1hcR4U2YuY28WoW4HpAP630S2OYoW5yKEHss",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"{{$randomJobTitle}}\",\n    \"content\":\"{{$randomJobTitle}}\",\n    \"categoryIds\":[1,2,3]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/post/26"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Post by Id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0IiwiaXNzIjoibGluay1hd3MtYmFja2VuZCIsImF1ZCI6ImxpbmstYXdzLWZyb250ZW5kIiwiZXhwIjoxNzY1MzgxMzA1LCJpYXQiOjE3NjUyOTQ5MDUsInVzZXIiOnsiaWQiOjQsIm5hbWUiOiJDbGVtYSIsImVtYWlsIjoiY2xlbWFAZ3VzYmFsZG8uY29tIiwicm9sZSI6IlNJTVBMRSJ9fQ.iKvm3klhyn4_0rtdBYfSJBKXoC08XVWaGCK3USQ4OGI",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{base_url}}/post/26"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Recent Posts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwiaXNzIjoibGluay1hd3MtYmFja2VuZCIsImF1ZCI6ImxpbmstYXdzLWZyb250ZW5kIiwiZXhwIjoxNzY1MzgxMjY0LCJpYXQiOjE3NjUyOTQ4NjQsInVzZXIiOnsiaWQiOjMsIm5hbWUiOiJDYWJlbGl0b3MiLCJlbWFpbCI6ImNhYmVsaXRvc0BndXNiYWxkby5jb20iLCJyb2xlIjoiU0lNUExFIn19.tC5ZFWP8NolyP8IUoT3hrmiRAQUKz6aylUOzNEbrFjs",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "size",
+								"value": "2",
+								"type": "text"
+							},
+							{
+								"key": "page",
+								"value": "0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/post?size=2&page=0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"post"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "2"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "NotFound",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaXNzIjoibGluay1hd3MtYmFja2VuZCIsImF1ZCI6ImxpbmstYXdzLWZyb250ZW5kIiwiZXhwIjoxNzY1MzYwMTM3LCJpYXQiOjE3NjUyNzM3MzcsInVzZXIiOnsiaWQiOjEsIm5hbWUiOiJHdXNiYWxkb0FETSIsImVtYWlsIjoiYWRtaW5AZ3VzYmFsZG8uY29tIiwicm9sZSI6IkFETUlOSVNUUkFUT1IifX0.uZ_BivC_dCzST1CGlLqAijf1OolEoNvHABwkV2yZOYE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"Politics\"\n}"
+				},
+				"url": "{{base_url}}/test"
+			},
+			"response": []
+		},
+		{
+			"name": "Health",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaXNzIjoibGluay1hd3MtYmFja2VuZCIsImF1ZCI6ImxpbmstYXdzLWZyb250ZW5kIiwiZXhwIjoxNzY1MzYwMTM3LCJpYXQiOjE3NjUyNzM3MzcsInVzZXIiOnsiaWQiOjEsIm5hbWUiOiJHdXNiYWxkb0FETSIsImVtYWlsIjoiYWRtaW5AZ3VzYmFsZG8uY29tIiwicm9sZSI6IkFETUlOSVNUUkFUT1IifX0.uZ_BivC_dCzST1CGlLqAijf1OolEoNvHABwkV2yZOYE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"Politics\"\n}"
+				},
+				"url": "{{base_url}}/health"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiaXNzIjoibGluay1hd3MtYmFja2VuZCIsImF1ZCI6ImxpbmstYXdzLWZyb250ZW5kIiwiZXhwIjoxNzY1NDM5NTkwLCJpYXQiOjE3NjU0MzU5OTAsInVzZXIiOnsiaWQiOjEsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AZ3VzYmFsZG8uY29tIiwicm9sZSI6IkFETUlOSVNUUkFUT1IifX0.NTuiOd6LFZVpyUpFYwUAuipND827knjjcnDBrocuh0c"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
