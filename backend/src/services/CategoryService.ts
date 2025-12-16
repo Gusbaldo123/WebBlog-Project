@@ -2,6 +2,7 @@ import { Category } from "../generated/prisma/client"
 import { Prisma } from "../managers/Prisma";
 import { Crud } from "../models/Crud";
 import { CategoryCreateDTO } from "../models/dtos";
+import RedisManager from "../managers/RedisManager";
 
 class CategoryService extends Crud<Category, Category> {
     public override async create(category: CategoryCreateDTO): Promise<Category> {
@@ -9,6 +10,8 @@ class CategoryService extends Crud<Category, Category> {
         let createdCategory: Category = await Prisma.category.create({
             data: { name }
         })
+
+        RedisManager.deleteValue('all_categories');
         return createdCategory;
     }
 
@@ -48,6 +51,9 @@ class CategoryService extends Crud<Category, Category> {
     }
 
     public async listAll(): Promise<Category[]> {
+        const cachedCategories = await RedisManager.getValue('all_categories');
+        if (cachedCategories) return JSON.parse(cachedCategories) as Category[];
+
         const categories: Category[] = await Prisma.category.findMany();
         return categories;
     }

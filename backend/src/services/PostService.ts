@@ -222,10 +222,7 @@ class PostService extends Crud<PostCreateDTO, PostResponseDTO> {
         const skip = (page) * size;
 
         const cachedPosts = await RedisManager.getValue(`recent_posts_page_${page}_size_${size}`);
-        if (cachedPosts){
-            console.log("Returning cached recent posts");
-            return JSON.parse(cachedPosts) as PostResponseDTO[];
-        }
+        if (cachedPosts)return JSON.parse(cachedPosts) as PostResponseDTO[];
 
         const posts = await Prisma.post.findMany({
             orderBy: { createdAt: 'desc' },
