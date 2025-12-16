@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Script to copy the base infra .env to repo root, backend, and frontend/src
-# Usage: run from anywhere: ./infra/scripts/generate_env.sh
+# Usage: run from anywhere: ./infra/scripts/start.sh
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BASE_ENV="$SCRIPT_DIR/../.env"
@@ -20,7 +20,7 @@ while [ "$#" -gt 0 ]; do
       NO_COMPOSE=1; shift ;;
     -h|--help)
       echo "Usage: $0 [--force]";
-      echo "  --force  overwrite existing .env files (no backup)";
+      echo "  --force  delete existing .env files and generate new ones";
       exit 0 ;;
     *) echo "Unknown arg: $1"; exit 1 ;;
   esac
@@ -28,14 +28,6 @@ done
 
 # By default run docker compose after generating env files; set NO_COMPOSE=1 to skip
 NO_COMPOSE=${NO_COMPOSE:-0}
-
-backup_if_exists() {
-  if [ -f "$1" ]; then
-    ts=$(date +%Y%m%dT%H%M%S)
-    cp "$1" "$1.bak.$ts"
-    echo "Backed up $1 -> $1.bak.$ts"
-  fi
-}
 
 if [ ! -f "$BASE_ENV" ]; then
   echo "Base env not found: $BASE_ENV"
@@ -45,19 +37,25 @@ fi
 
 for dest in "$ROOT_ENV" "$BACKEND_ENV" "$FRONTEND_ENV"; do
   dest_dir="$(dirname "$dest")"
+  
+  # Create destination directory if it doesn't exist
   if [ ! -d "$dest_dir" ]; then
     echo "Creating directory $dest_dir"
     mkdir -p "$dest_dir"
   fi
+  
+  # Delete existing .env file if --force is used
   if [ -f "$dest" ]; then
     if [ "$FORCE" -eq 1 ]; then
-      echo "Overwriting existing $dest (force)"
-      cp "$BASE_ENV" "$dest"
+      echo "Deleting existing $dest"
+      rm "$dest"
       echo "Copied $BASE_ENV -> $dest"
+      cp "$BASE_ENV" "$dest"
     else
       echo "Skipped $dest (already exists). Use --force to overwrite."
     fi
   else
+    # File doesn't exist, just copy it
     cp "$BASE_ENV" "$dest"
     echo "Copied $BASE_ENV -> $dest"
   fi
@@ -82,4 +80,3 @@ if [ "$NO_COMPOSE" -eq 0 ]; then
 else
   echo "Skipping docker compose because --no-compose was provided."
 fi
-
