@@ -6,6 +6,7 @@ import { AuthorResponseDTO, PostCreateDTO, PostResponseDTO } from "../models/dto
 import { Category } from "../generated/prisma/client";
 import { CategoryService } from '../services/CategoryService';
 import { AuthorService } from '../services/AuthorService';
+import RedisManager from "../managers/RedisManager";
 
 import generatePost from '../models/agent/agent';
 
@@ -77,6 +78,8 @@ class PostService extends Crud<PostCreateDTO, PostResponseDTO> {
                     author: true
                 }
             });
+
+            await RedisManager.deleteKeysByPattern('recent_posts_page_*');
 
             return PostResponseDTO.fromEntity(createdPost, AuthorResponseDTO.fromEntity(foundAuthor), categories);
         } catch (error) {
@@ -218,6 +221,12 @@ class PostService extends Crud<PostCreateDTO, PostResponseDTO> {
     public async getRecentPosts(page: number, size: number): Promise<PostResponseDTO[] | null> {
         const skip = (page) * size;
 
+        const cachedPosts = await RedisManager.getValue(`recent_posts_page_${page}_size_${size}`);
+        if (cachedPosts){
+            console.log("Returning cached recent posts");
+            return JSON.parse(cachedPosts) as PostResponseDTO[];
+        }
+
         const posts = await Prisma.post.findMany({
             orderBy: { createdAt: 'desc' },
             skip,
@@ -230,14 +239,13 @@ class PostService extends Crud<PostCreateDTO, PostResponseDTO> {
 
         if (posts.length <= 0) return null;
 
-        return posts.map(p => {
+        const postsDtoList: PostResponseDTO[] = posts.map(p => {
             const categories = p.postCategories.map(pc => pc.category);
-            return PostResponseDTO.fromEntity(
-                p,
-                AuthorResponseDTO.fromEntity(p.author),
-                categories
-            );
+            const authorDto = AuthorResponseDTO.fromEntity(p.author);
+            return PostResponseDTO.fromEntity(p, authorDto, categories);
         });
+        await RedisManager.setValue(`recent_posts_page_${page}_size_${size}`, JSON.stringify(postsDtoList), 10);
+        return postsDtoList;
     }
 }
 

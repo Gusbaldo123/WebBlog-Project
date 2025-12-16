@@ -3,6 +3,10 @@ import { PostService } from '../services/PostService';
 import { RouterAPI } from '../models/RouterAPI';
 import { AuthorResponseDTO, PostCreateDTO, PostResponseDTO } from '../models/dtos';
 import { PostSchema } from '../models/validator/PostSchema';
+import { createClient } from 'redis';
+
+const client = createClient({ url: 'redis://localhost:6379' });
+client.on('error', (err) => console.log('Redis Client Error', err))
 
 class PostRouter extends RouterAPI<PostService, PostCreateDTO, PostResponseDTO> {
     constructor() {
